@@ -18,6 +18,7 @@ class SecurityConfig {
             .authorizeHttpRequests { auth ->
                 auth
                     .requestMatchers("/users/**").permitAll()
+                    .requestMatchers("/todos/**").permitAll()
                     .requestMatchers("/health/**").permitAll()
                     .requestMatchers("/h2-console/**").permitAll()
                     .anyRequest().authenticated()
