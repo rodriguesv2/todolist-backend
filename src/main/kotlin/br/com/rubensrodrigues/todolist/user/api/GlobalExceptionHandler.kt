@@ -1,5 +1,6 @@
 package br.com.rubensrodrigues.todolist.user.api
 
+import br.com.rubensrodrigues.todolist.auth.domain.InvalidCredentialsException
 import br.com.rubensrodrigues.todolist.user.domain.UserAlreadyExistsException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -22,6 +23,15 @@ class GlobalExceptionHandler {
         return ErrorResponse(
             code = "USER_ALREADY_EXISTS",
             message = ex.message ?: "User already exists"
+        )
+    }
+
+    @ExceptionHandler(InvalidCredentialsException::class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    fun handleInvalidCredentials(ex: InvalidCredentialsException): ErrorResponse {
+        return ErrorResponse(
+            code = "INVALID_CREDENTIALS",
+            message = ex.message ?: "Invalid credentials"
         )
     }
 }

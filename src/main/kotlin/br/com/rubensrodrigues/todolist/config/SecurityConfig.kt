@@ -20,10 +20,11 @@ class SecurityConfig {
                     .requestMatchers("/users/**").permitAll()
                     .requestMatchers("/todos/**").permitAll()
                     .requestMatchers("/health/**").permitAll()
+                    .requestMatchers("/auth/login").permitAll()
                     .requestMatchers("/h2-console/**").permitAll()
                     .anyRequest().authenticated()
             }
-            .httpBasic { }
+            .httpBasic { it.disable() }
             .formLogin { it.disable() }
 
         http.headers { headers ->

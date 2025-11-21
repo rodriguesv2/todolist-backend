@@ -28,3 +28,9 @@ logging:
   level:
     org.springframework.security: INFO
     org.hibernate.SQL: DEBUG
+
+app:
+  security:
+    jwt:
+      secret: "MINHA-SUPER-CHAVE-SECRETA-DEV-NAO-USAR-EM-PROD"
+      expiration-seconds: 3600
