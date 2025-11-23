@@ -1,6 +1,7 @@
 package br.com.rubensrodrigues.todolist.user.api
 
 import br.com.rubensrodrigues.todolist.auth.domain.InvalidCredentialsException
+import br.com.rubensrodrigues.todolist.todo.domain.UserNotFoundException
 import br.com.rubensrodrigues.todolist.user.domain.UserAlreadyExistsException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -32,6 +33,15 @@ class GlobalExceptionHandler {
         return ErrorResponse(
             code = "INVALID_CREDENTIALS",
             message = ex.message ?: "Invalid credentials"
+        )
+    }
+
+    @ExceptionHandler(UserNotFoundException::class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    fun handleUserNotFound(ex: UserNotFoundException): ErrorResponse {
+        return ErrorResponse(
+            code = "USER_NOT_FOUND",
+            message = ex.message ?: "User not found"
         )
     }
 }
