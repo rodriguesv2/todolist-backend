@@ -28,7 +28,7 @@ class Board(
     val name: String,
 
     @Column(nullable = true, length = 2000)
-    val description: String,
+    val description: String?,
 
     @Column(nullable = false)
     val createdAt: Instant = Instant.now(),
