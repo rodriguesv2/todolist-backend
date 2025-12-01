@@ -18,6 +18,7 @@ class SecurityConfig {
                 auth
                     .requestMatchers("/users/**").permitAll()
                     .requestMatchers("/todos/**").permitAll()
+                    .requestMatchers("/boards/**").permitAll()
                     .requestMatchers("/health/**").permitAll()
                     .requestMatchers("/auth/login").permitAll()
                     .requestMatchers("/h2-console/**").permitAll()

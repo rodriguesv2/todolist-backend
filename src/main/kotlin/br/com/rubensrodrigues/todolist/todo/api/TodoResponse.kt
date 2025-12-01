@@ -7,7 +7,8 @@ data class TodoResponse(
     val title: String,
     val description: String?,
     val status: TodoStatus,
-    val ownerId: Long,
+    val boardId: Long,
+    val boardName: String,
     val createdAt: String,
     val completedAt: String?
 )

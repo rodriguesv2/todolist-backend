@@ -6,13 +6,7 @@ import br.com.rubensrodrigues.todolist.todo.domain.TodoStatus
 import br.com.rubensrodrigues.todolist.todo.service.TodoService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/todos")
@@ -21,20 +15,32 @@ class TodoController(
     private val currentUserProvider: CurrentUserProvider
 ) {
 
-    @PostMapping
+    @PostMapping("/{boardId}")
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody @Valid request: CreateTodoRequest): TodoResponse {
+    fun create(
+        @PathVariable boardId: Long,
+        @RequestBody @Valid request: CreateTodoRequest
+    ): TodoResponse {
         val username = currentUserProvider.getCurrentUsername()
-        val todo = todoService.createTodo(request, username)
+        val todo = todoService.createTodo(
+            request = request,
+            boardId = boardId,
+            username = username,
+        )
         return todo.toResponse()
     }
 
-    @GetMapping
+    @GetMapping("/{boardId}")
     fun list(
+        @PathVariable boardId: Long,
         @RequestParam(required = false) status: TodoStatus?
     ): List<TodoResponse> {
         val username = currentUserProvider.getCurrentUsername()
-        val todos = todoService.listTodosForUser(username, status)
+        val todos = todoService.listTodosForBoard(
+            boardId = boardId,
+            username = username,
+            status = status
+        )
         return todos.map { it.toResponse() }
     }
 
@@ -43,7 +49,8 @@ class TodoController(
         title = this.title,
         description = this.description,
         status = this.status,
-        ownerId = this.owner.id,
+        boardId = this.board.id,
+        boardName = this.board.name,
         createdAt = this.createdAt.toString(),
         completedAt = this.completedAt?.toString()
     )

@@ -32,6 +32,6 @@ class BoardService(
         val user = userRepository.findByUsername(username)
             ?: throw UserNotFoundException(username)
 
-        return boardRepository.findAllByOwnerId(user.id)
+        return boardRepository.findAllByUserId(user.id)
     }
 }

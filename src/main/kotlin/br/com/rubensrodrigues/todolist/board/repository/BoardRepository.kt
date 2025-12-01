@@ -4,5 +4,5 @@ import br.com.rubensrodrigues.todolist.board.domain.Board
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface BoardRepository: JpaRepository<Board, Long> {
-    fun findAllByOwnerId(ownerId: Long): List<Board>
+    fun findAllByUserId(userId: Long): List<Board>
 }
